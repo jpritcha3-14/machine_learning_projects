@@ -82,14 +82,11 @@ class LearningAgent(Agent):
         return maxQ 
 
     
-    def get_maxQ_action(self, state):
+    def get_maxQ_state(self, state):
         """ Helper function to get the action with the highest Q value given a state """
-        max_action = None
-        max_val = -1
-        for a, q in self.Q[state].items():    
-            if q > max_val:
-                max_val = q
-                max_action = a
+        maxQ = self.get_maxQ(state)
+        max_actions = [a for a in self.valid_actions if self.Q[state][a] == maxQ]
+        max_action = random.choice(max_actions) 
         return max_action
 
 
@@ -133,8 +130,8 @@ class LearningAgent(Agent):
             if random.randint(1,100) <= int(round(self.epsilon * 100)):
                 action = self.valid_actions[random.randint(0,len(self.valid_actions) -1)]  
             else:
-                action = self.get_maxQ_action(state)
-            
+                action = self.get_maxQ_state(state) 
+
         return action
 
 
